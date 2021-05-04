@@ -5,12 +5,12 @@ const characterController = {};
 
 // createCharacter requests for making a new Character model and saving to the database
 characterController.getCharacter = (req, res, next) => {
-    
+
 };
 
 // getCharacter for displaying saved characters
 characterController.getCharacter = (req, res, next) => {
-
+    
 };
 
 // updateCharacter (PUT) for changes to characters being rendered

@@ -1,7 +1,13 @@
 import React, {Component} from 'react';
 import Stats from './Stats';
+import Abilities from './Abilities';
 
-/* stateful container component for the entire app*/ 
+/* 
+
+stateful container component for the entire app 
+holds state and passes state and functionality as props to Stats and Abilities presentation components
+
+*/ 
 class App extends Component {
     constructor(props) {
         super(props);
@@ -14,6 +20,17 @@ class App extends Component {
                 wisdom: 0,
                 charisma: 0,
             },
+            abilities: [
+                {
+                    name: 'Ability#1',
+                    desc: 'This is how the ability works!', 
+
+                },
+                {
+                    name: 'Ability#2', 
+                    desc: 'This is how THIS ability works!',
+                },
+            ],
         }
         this.generateStats = this.generateStats.bind(this);
         this.rollDice = this.rollDice.bind(this); 
@@ -27,7 +44,7 @@ class App extends Component {
         // repeats and adds a single roll a number of times equal to repeat
         for (let i = 0; i < repeat; i += 1) {
             // represents a single roll of a dice-sided die
-            result += Math.ceil(Math.random() * dice) + 1;
+            result += Math.ceil(Math.random() * dice);
         }
         return result += modifier;
     }
@@ -54,6 +71,7 @@ class App extends Component {
                 <h1>Prepare to Fight!</h1>
                 <div>
                     <Stats generateStats={this.generateStats} stats={this.state.stats}/>
+                    <Abilities abilities={this.state.abilities}/>
                 </div>
             </div>
             )
