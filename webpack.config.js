@@ -6,7 +6,7 @@ module.exports = {
         path: path.resolve(__dirname, 'build'), 
         filename: 'bundle.js',
     },
-    mode: 'production',
+    mode: 'development',
     module: {
         rules: [{
             test: /\.jsx?/,
