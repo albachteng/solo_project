@@ -7,16 +7,19 @@ const apiRouter = require('./routes/api');
 // handle parsing request body
 app.use(express.json);
 
+// static router from the build folder
 app.use('/build', express.static(path.join(__dirname, '../build')));
 
+// base route serves index.html
 app.get('/', (req, res) => {
     return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
 
-// TODO: character ROUTER logic
+// character ROUTER logic handled in api.js
 app.use('/api', apiRouter);
 
-// TODO: DB ROUTER logic?
+// TODO: DB ROUTER logic
+
 
 // catch-all route handler
 app.use((req, res) => res.status(404).send('A Fightr knows not this path. A Fightr must fight!')); 
