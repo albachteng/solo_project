@@ -1,0 +1,43 @@
+{
+  "name": "solo_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/server.js",
+    "build": "webpack",
+    "dev": "webpack serve --open"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "build",
+      "client"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/albachteng/solo_project.git"
+  },
+  "bugs": {
+    "url": "https://github.com/albachteng/solo_project/issues"
+  },
+  "homepage": "https://github.com/albachteng/solo_project#readme",
+  "author": "Graham Albachten",
+  "license": "ISC",
+  "dependencies": {
+    "prop-types": "^15.6.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "webpack": "^5.32.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.0",
+    "@babel/preset-env": "^7.14.0",
+    "@babel/preset-react": "^7.13.13",
+    "babel-loader": "^8.2.2",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7",
+    "webpack-cli": "^4.6.0"
+  }
+}
