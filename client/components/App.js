@@ -32,11 +32,12 @@ class App extends Component {
                 },
             ],
             level: 1,
-            class: 'fighter',
+            class: {index: 'fighter'},
+            levels: {},
         }
         this.rollDice = this.rollDice.bind(this); 
         this.generateStats = this.generateStats.bind(this);
-        this.getAbilities = this.getAbilities.bind(this);
+        this.displayState = this.displayState.bind(this); 
     }
 
     // returns a random whole number from 1 to dice
@@ -49,6 +50,7 @@ class App extends Component {
             // represents a single roll of a dice-sided die
             result += Math.ceil(Math.random() * dice);
         }
+        // if a modifier is provided, it is added at the end before returning
         return result += modifier;
     }
 
@@ -67,46 +69,25 @@ class App extends Component {
         });
     }
 
-    // ! I feel like this logic deserves its own separate file...
-    // makes a fetch request to the dnd5e api
-    // recursively builds a newAbilities array by filling 
-    // in name and description properties on ability objects
-    // for now it will simply update state when it is done
-    getAbilities() {
-        const newAbilities = [];
-        let url = 'https://www.dnd5eapi.co/api/classes/';
-        url += this.state.class + '/levels/' + this.state.level;
-        fetch(url)
-          .then(response => response.json())
-          .then(data => {
-            if (data.feature_choices.length >= 1) {
-              data.feature_choices.forEach(choice => {
-                let desc = this.getAbilityDesc(choice.url);
-                newAbilities.push({name: choice.name, desc: desc});
-              })
-            }
-            if (data.features.length >= 1) {
-              data.features.forEach(feature => {
-                  let desc = this.getAbilityDesc(feature.url);
-                  newAbilities.push({name: feature.name, desc: desc});
-              });
-            }
-          })
-        console.log(newAbilities);
-        this.setState((state, props) => {
-            return {...state, abilities: newAbilities}
-        });
+    displayState() {
+        console.log(this.state);
     }
 
-    // takes a urlQuery string to an ability and returns its description text
-    getAbilityDesc(urlQuery) {
-        let url = 'https://www.dnd5eapi.co' + urlQuery;
-        fetch(url)
-          .then(response => response.json())
-          .then(data => {
-            console.log(data.desc[0]);
-            return data.desc[0];
-        })    
+    // ! I feel like this logic deserves its own separate file...
+    // makes a fetch request to the dnd5e api
+    componentDidMount() {
+        console.log('running'); 
+        const baseUrl = 'https://www.dnd5eapi.co/api/';
+        fetch(baseUrl + 'classes/' + this.state.class.index)
+            .then(response => response.json())
+            .then(data => this.setState((state, props) => {
+                return {...state, class: data};
+            }))
+        fetch(baseUrl + 'classes/' + this.state.class.index + '/levels/' + this.state.level)
+            .then(response => response.json())
+            .then(data => this.setState((state, props) => {
+                return {...state, levels: data}
+            }))
     }
 
     render() {
@@ -120,7 +101,7 @@ class App extends Component {
                     />
                     <Abilities 
                       abilities={this.state.abilities} 
-                      getAbilities={this.getAbilities}
+                      displayState={this.displayState}
                     />
                 </div>
             </div>

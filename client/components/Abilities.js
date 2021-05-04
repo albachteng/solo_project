@@ -23,7 +23,7 @@ const Abilities = (props) => {
                     </div>
                 )
             })}
-            <button onClick={props.getAbilities}>Get abilities</button>
+            <button onClick={props.displayState}>Get abilities</button>
         </div>
     )
 }
