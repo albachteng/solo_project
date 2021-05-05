@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 const Stats = (props) => {
   return(
     <div id="stats">
+      <h2>Ability Scores</h2>
       <h3><strong>STR: </strong>{props.stats.strength}</h3>
       <h3><strong>DEX: </strong>{props.stats.dexterity}</h3>
       <h3><strong>CON: </strong>{props.stats.constitution}</h3>

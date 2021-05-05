@@ -1,21 +1,30 @@
-import React, {Component, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 /* 
 
-stateless presentation component that displays 
+presentation component that displays 
 the result of a random query to the dnd api 
 for (fighter) abilities
 
 */ 
 
-const Abilities = (props) => {
+const Abilities = ({levels, displayState, classFeatureChoices, characterClass}) => {
 
-    // update abilities state after render?
+    const [abilitiesArray, setAbilitiesArray] = useState([]);
+
+    useEffect(() => {
+        const classFeatures = levels.features || [];
+        setAbilitiesArray([classFeatures.concat(classFeatureChoices || [])]);
+    }, [levels, classFeatureChoices]);
+
+    useEffect(() => {
+        console.log(abilitiesArray);
+    }, [abilitiesArray]);
 
     return(
         <div id="abilities">
-            <h3>Abilities</h3>
-            {props.abilities.map(ability => {
+            <h2>Abilities</h2>
+            {abilitiesArray.map(ability => {
                 return (
                     // TODO add unique keys for mapped abilities
                     <div className="ability">
@@ -24,7 +33,7 @@ const Abilities = (props) => {
                     </div>
                 )
             })}
-            <button onClick={props.displayState}>Get abilities</button>
+            <button onClick={displayState}>Get abilities</button>
         </div>
     )
 }

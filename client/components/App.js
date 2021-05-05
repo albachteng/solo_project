@@ -7,7 +7,7 @@ import Proficiencies from './Proficiencies';
 
 stateful container component for the entire app 
 holds state, handles API calls and passes state 
-and functionality as props to Stats and Abilities 
+and functionality as props to Stats, Proficiencies and Abilities 
 presentation components
 
 */ 
@@ -34,7 +34,7 @@ class App extends Component {
                     desc: 'This is how THIS ability works!',
                 },
             ],
-            level: 1,
+            currentLevel: 1,
             characterClass: {index: 'fighter', proficiency_choices: [{choose: 0}],},
             levels: {},
         }
@@ -95,33 +95,42 @@ class App extends Component {
 
     // makes a fetch request to the dnd5e api
     componentDidMount() {
-        console.log('running'); 
         const baseUrl = 'https://www.dnd5eapi.co/api/';
         fetch(baseUrl + 'classes/' + this.state.characterClass.index)
             .then(response => response.json())
             .then(data => this.setState((state, props) => {
                 return {...state, characterClass: data};
             }))
-        fetch(baseUrl + 'classes/' + this.state.characterClass.index + '/levels/' + this.state.level)
+        fetch(baseUrl + 'classes/' + this.state.characterClass.index + '/levels/' + this.state.currentLevel)
             .then(response => response.json())
-            .then(data => this.setState((state, props) => {
+            .then(data => {
+                fetch('https://www.dnd5eapi.co' + data.feature_choices[0].url)
+                    .then(response => response.json())
+                    .then(data => {
+                        this.setState((state, props) => {
+                            return {...state, classFeatureChoices: data}
+                        });
+                    })
+                this.setState((state, props) => {
                 return {...state, levels: data}
-            }))
+                })
+            })
         
     }
 
     render() {
         return(
             <div id="app">
-                <h1>Prepare to Fight!</h1>
                 <div>
                     <Stats 
                       generateStats={this.generateStats} 
                       stats={this.state.stats}
                     />
                     <Abilities 
-                      abilities={this.state.abilities} 
+                      classFeatureChoices={this.state.classFeatureChoices}
+                      levels={this.state.levels}
                       displayState={this.displayState}
+                      characterClass={this.state.characterClass}
                     />
                     <Proficiencies
                       characterClass={this.state.characterClass}
