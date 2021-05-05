@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Stats from './Stats';
 import Abilities from './Abilities';
 import Proficiencies from './Proficiencies';
+import Equipment from './Equipment';
 import '../scss/main.scss';
 
 /* 
@@ -23,9 +24,14 @@ class App extends Component {
                 intelligence: 0,
                 wisdom: 0,
                 charisma: 0,
+                hp: 0,
+                ac: 0, 
             },
             currentLevel: 1,
             characterClass: {
+                starting_equipment: [],
+                starting_equipment_options: [],
+                hit_die: 8,
                 index: ['barbarian', 'bard', 'cleric', 'druid', 'fighter', 'monk', 'paladin', 'ranger', 'ranger', 'sorcerer', 'warlock', 'wizard',][Math.floor(Math.random() * 12)],
                 proficiency_choices: [
                     {choose: 0}
@@ -63,6 +69,8 @@ class App extends Component {
         newStats.intelligence = this.rollDice(6, 3);
         newStats.wisdom = this.rollDice(6, 3);
         newStats.charisma = this.rollDice(6, 3);
+        newStats.HP = this.state.characterClass.hit_die + Math.floor((newStats.constitution - 10) / 2);
+        newStats.AC = 10 + Math.floor((newStats.dexterity - 10) / 2); 
         this.setState((state, props) => {
             return {...state, 
                 characterClass: {
@@ -140,6 +148,7 @@ class App extends Component {
                     <Stats 
                       generateStats={this.generateStats} 
                       stats={this.state.stats}
+                      characterClass={this.state.characterClass}
                     />
                     <Abilities 
                       classFeatureChoices={this.state.classFeatureChoices}
@@ -151,9 +160,10 @@ class App extends Component {
                       characterClass={this.state.characterClass}
                       chooseFrom={this.chooseFrom}
                     />
-                    <div>
-                        <p>{JSON.stringify(this.state)}</p>
-                    </div>
+                    <Equipment 
+                      characterClass={this.state.characterClass}
+                      chooseFrom={this.chooseFrom}
+                    />
                 </div>
             </div>
             )

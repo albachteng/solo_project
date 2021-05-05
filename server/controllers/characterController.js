@@ -8,7 +8,6 @@ characterController.createCharacter = (req, res, next) => {
     // state object will be on the body and represent the new character to create
     Character.create(req.body)
         .then(queryResponse => {
-            console.log('got into the query response');
             res.locals.character = queryResponse;
             return next();
         })
