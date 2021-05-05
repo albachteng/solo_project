@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Stats from './Stats';
 import Abilities from './Abilities';
 import Proficiencies from './Proficiencies';
+import '../scss/main.scss';
 
 /* 
 
@@ -150,6 +151,9 @@ class App extends Component {
                       characterClass={this.state.characterClass}
                       chooseFrom={this.chooseFrom}
                     />
+                    <div>
+                        <p>{JSON.stringify(this.state)}</p>
+                    </div>
                 </div>
             </div>
             )

@@ -1,14 +1,26 @@
-const {Pool} = require('pg'); 
+const mongoose = require('mongoose'); 
 
-const PG_URI = 'postgres://wwlmlnrv:IbH_Czff2KpQXH4RiHamwl4fKSt0S3Eg@queenie.db.elephantsql.com:5432/wwlmlnrv';
+const uri = 'mongodb+srv://admin:correcthorsebattery@cluster0.faeej.mongodb.net/Solo_Project?retryWrites=true&w=majority';
 
-const pool = new Pool({
-    connectionString: PG_URI
+mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    dbName: 'solo_project'
+})
+    .then(( console.log('connected to MongoDB')))
+    .catch(err => console.log(err));
+
+const Schema = mongoose.Schema; 
+
+const characterSchema = new Schema({
+    name: String,
+    stats: Object,
+    currentLevel: Number,
+    characterClass: Object,
+    levels: Object,
+    classFeatureChoices: Object,
 });
 
-module.exports = {
-    query: (text, params, callback) => {
-        console.log('executed query', text);
-        return pool.query(text, params, callback);
-    }
-}
+const Character = mongoose.model('character', characterSchema);
+
+module.exports = {Character};

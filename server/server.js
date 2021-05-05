@@ -1,11 +1,17 @@
 const express = require('express'); 
-
 const app = express();
 const path = require('path'); 
 const apiRouter = require('./routes/api');
+const mongoose = require('mongoose'); 
+const uri = 'mongodb+srv://admin:correcthorsebattery@cluster0.faeej.mongodb.net/Solo_Project?retryWrites=true&w=majority';
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // handle parsing request body
-app.use(express.json);
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+// character ROUTER logic handled in api.js
+app.use('/api', apiRouter);
 
 // static router from the build folder
 app.use('/build', express.static(path.join(__dirname, '../build')));
@@ -14,12 +20,6 @@ app.use('/build', express.static(path.join(__dirname, '../build')));
 app.get('/', (req, res) => {
     return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
-
-// character ROUTER logic handled in api.js
-app.use('/api', apiRouter);
-
-// TODO: DB ROUTER logic
-
 
 // catch-all route handler
 app.use((req, res) => res.status(404).send('A Fightr knows not this path. A Fightr must fight!')); 

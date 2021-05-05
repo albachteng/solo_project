@@ -24,14 +24,17 @@ module.exports = {
                 }}
             },
             {
-            test: /\s[ac]ss$/i,
+            test: /\.s[ac]ss$/i,
             use: ['style-loader', 'css-loader', 'sass-loader',]
             },
         ]  
     },
     devServer: {
+        port: 8080,
         publicPath: '/build',
-        // proxy: {},
+        proxy: {
+            '/api/**': 'http://localhost:3000',
+        },
         hot: true,
     },
 };
