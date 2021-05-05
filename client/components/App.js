@@ -63,7 +63,25 @@ class App extends Component {
         newStats.wisdom = this.rollDice(6, 3);
         newStats.charisma = this.rollDice(6, 3);
         this.setState((state, props) => {
-            return {...state, stats: newStats}
+            return {...state, 
+                characterClass: {
+                    ...state.characterClass,
+                },
+                classFeatureChoices: {
+                    ...state.classFeatureChoices,
+                },
+                stats: newStats}
+        });
+    }
+
+    chooseNewClass() {
+        const newClass = {
+            index: ['barbarian', 'bard', 'cleric', 'druid', 'fighter', 'monk', 'paladin', 'ranger', 'ranger', 'sorcerer', 'warlock', 'wizard',][Math.floor(Math.random() * 12)],
+            proficiency_choices: [
+                {choose: 0}
+            ],};
+        this.setState((state, props) => {
+            return {...state, characterClass: newClass};
         });
     }
 

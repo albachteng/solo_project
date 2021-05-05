@@ -4,7 +4,7 @@ const db = require('../models/characterModels');
 const characterController = {};
 
 // createCharacter requests for making a new Character model and saving to the database
-characterController.getCharacter = (req, res, next) => {
+characterController.createCharacter = (req, res, next) => {
 
 };
 
@@ -14,7 +14,7 @@ characterController.getCharacter = (req, res, next) => {
 };
 
 // updateCharacter (PUT) for changes to characters being rendered
-characterController.getCharacter = (req, res, next) => {
+characterController.updateCharacter = (req, res, next) => {
 
 };
 
