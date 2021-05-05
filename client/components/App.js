@@ -23,19 +23,12 @@ class App extends Component {
                 wisdom: 0,
                 charisma: 0,
             },
-            abilities: [
-                {
-                    name: 'Ability#1',
-                    desc: 'This is how the ability works!', 
-
-                },
-                {
-                    name: 'Ability#2', 
-                    desc: 'This is how THIS ability works!',
-                },
-            ],
             currentLevel: 1,
-            characterClass: {index: 'fighter', proficiency_choices: [{choose: 0}],},
+            characterClass: {
+                index: ['barbarian', 'bard', 'cleric', 'druid', 'fighter', 'monk', 'paladin', 'ranger', 'ranger', 'sorcerer', 'warlock', 'wizard',][Math.floor(Math.random() * 12)],
+                proficiency_choices: [
+                    {choose: 0}
+                ],},
             levels: {},
             classFeatureChoices: {choice: {choose: 0, from: []}}
         }
@@ -105,13 +98,15 @@ class App extends Component {
         fetch(baseUrl + 'classes/' + this.state.characterClass.index + '/levels/' + this.state.currentLevel)
             .then(response => response.json())
             .then(data => {
-                fetch('https://www.dnd5eapi.co' + data.feature_choices[0].url)
+                if (data.feature_choices.length > 0) {
+                    fetch('https://www.dnd5eapi.co' + data.feature_choices[0].url)
                     .then(response => response.json())
                     .then(data => {
                         this.setState((state, props) => {
                             return {...state, classFeatureChoices: data}
                         });
                     })
+                }
                 this.setState((state, props) => {
                 return {...state, levels: data}
                 })
