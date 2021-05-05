@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import Ability from './Ability';
 
 /* 
 
@@ -8,31 +9,22 @@ for (fighter) abilities
 
 */ 
 
-const Abilities = ({levels, displayState, classFeatureChoices, characterClass}) => {
+const Abilities = ({levels, displayState, classFeatureChoices, chooseFrom}) => {
 
     const [abilitiesArray, setAbilitiesArray] = useState([]);
 
     useEffect(() => {
         const classFeatures = levels.features || [];
-        setAbilitiesArray([classFeatures.concat(classFeatureChoices || [])]);
+        const classFeatureSelections = chooseFrom(
+            classFeatureChoices.choice.choose, // a number
+            classFeatureChoices.choice.from) // an array
+        setAbilitiesArray([...classFeatures, ...classFeatureSelections  || []]);
     }, [levels, classFeatureChoices]);
 
-    useEffect(() => {
-        console.log(abilitiesArray);
-    }, [abilitiesArray]);
-
-    return(
+    return( 
         <div id="abilities">
-            <h2>Abilities</h2>
-            {abilitiesArray.map(ability => {
-                return (
-                    // TODO add unique keys for mapped abilities
-                    <div className="ability">
-                        <h4>{ability.name}</h4>
-                        <p>{ability.desc}</p>
-                    </div>
-                )
-            })}
+            <h2>Abilities</h2>  
+            <ul>{abilitiesArray.map(ability => <Ability name={ability.name} url={ability.url}/>)}</ul>
             <button onClick={displayState}>Get abilities</button>
         </div>
     )

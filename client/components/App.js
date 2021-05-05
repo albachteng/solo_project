@@ -37,6 +37,7 @@ class App extends Component {
             currentLevel: 1,
             characterClass: {index: 'fighter', proficiency_choices: [{choose: 0}],},
             levels: {},
+            classFeatureChoices: {choice: {choose: 0, from: []}}
         }
         this.rollDice = this.rollDice.bind(this); 
         this.generateStats = this.generateStats.bind(this);
@@ -115,7 +116,7 @@ class App extends Component {
                 return {...state, levels: data}
                 })
             })
-        
+        this.generateStats();
     }
 
     render() {
@@ -130,7 +131,7 @@ class App extends Component {
                       classFeatureChoices={this.state.classFeatureChoices}
                       levels={this.state.levels}
                       displayState={this.displayState}
-                      characterClass={this.state.characterClass}
+                      chooseFrom={this.chooseFrom}
                     />
                     <Proficiencies
                       characterClass={this.state.characterClass}
