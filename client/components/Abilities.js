@@ -10,13 +10,14 @@ for (fighter) abilities
 
 const Abilities = (props) => {
 
-    // update abilities state after render 
+    // update abilities state after render?
 
     return(
         <div id="abilities">
             <h3>Abilities</h3>
             {props.abilities.map(ability => {
                 return (
+                    // TODO add unique keys for mapped abilities
                     <div className="ability">
                         <h4>{ability.name}</h4>
                         <p>{ability.desc}</p>

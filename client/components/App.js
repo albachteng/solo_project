@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import Stats from './Stats';
 import Abilities from './Abilities';
+import Proficiencies from './Proficiencies';
 
 /* 
 
 stateful container component for the entire app 
-holds state and passes state and functionality as props to Stats and Abilities presentation components
+holds state, handles API calls and passes state 
+and functionality as props to Stats and Abilities 
+presentation components
 
 */ 
 class App extends Component {
@@ -32,12 +35,13 @@ class App extends Component {
                 },
             ],
             level: 1,
-            class: {index: 'fighter'},
+            characterClass: {index: 'fighter', proficiency_choices: [{choose: 0}],},
             levels: {},
         }
         this.rollDice = this.rollDice.bind(this); 
         this.generateStats = this.generateStats.bind(this);
         this.displayState = this.displayState.bind(this); 
+        this.chooseFrom = this.chooseFrom.bind(this);  
     }
 
     // returns a random whole number from 1 to dice
@@ -73,21 +77,37 @@ class App extends Component {
         console.log(this.state);
     }
 
-    // ! I feel like this logic deserves its own separate file...
+    // selects num number of items randomly from array and returns them as a new array
+    chooseFrom(num, array) {
+        if (num < 1 || !array || array.length < 1) return [];
+        const output = [];
+        while (num) {
+            // generate a random index
+            const index = Math.ceil(Math.random() * array.length - 1);
+            // if we don't already have that item in the output array
+            if (!output.includes(array[index])) {
+                output.push(array[index]);
+                num -= 1;
+            } else continue;
+        }
+        return output;
+    }
+
     // makes a fetch request to the dnd5e api
     componentDidMount() {
         console.log('running'); 
         const baseUrl = 'https://www.dnd5eapi.co/api/';
-        fetch(baseUrl + 'classes/' + this.state.class.index)
+        fetch(baseUrl + 'classes/' + this.state.characterClass.index)
             .then(response => response.json())
             .then(data => this.setState((state, props) => {
-                return {...state, class: data};
+                return {...state, characterClass: data};
             }))
-        fetch(baseUrl + 'classes/' + this.state.class.index + '/levels/' + this.state.level)
+        fetch(baseUrl + 'classes/' + this.state.characterClass.index + '/levels/' + this.state.level)
             .then(response => response.json())
             .then(data => this.setState((state, props) => {
                 return {...state, levels: data}
             }))
+        
     }
 
     render() {
@@ -102,6 +122,10 @@ class App extends Component {
                     <Abilities 
                       abilities={this.state.abilities} 
                       displayState={this.displayState}
+                    />
+                    <Proficiencies
+                      characterClass={this.state.characterClass}
+                      chooseFrom={this.chooseFrom}
                     />
                 </div>
             </div>
