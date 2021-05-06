@@ -9,7 +9,7 @@ for (fighter) abilities
 
 */ 
 
-const Abilities = ({levels, stats, characterClass, race, displayState, classFeatureChoices, chooseFrom}) => {
+const Abilities = ({levels, characterClass, race, displayState, classFeatureChoices, chooseFrom}) => {
 
     const [abilitiesArray, setAbilitiesArray] = useState([]);
 
@@ -20,16 +20,16 @@ const Abilities = ({levels, stats, characterClass, race, displayState, classFeat
             classFeatureChoices.choice.choose, // a number
             classFeatureChoices.choice.from) // an array
         setAbilitiesArray([...classFeatures, ...racialFeatures || [], ...classFeatureSelections  || []]);
-    }, [characterClass, race, stats]);
+    }, [characterClass, race]);
 
-    useEffect(() => {
-        console.log(abilitiesArray);
-    }, [abilitiesArray]);
+    // useEffect(() => {
+    //     console.log(abilitiesArray);
+    // }, [abilitiesArray]);
 
     return( 
         <div id="abilities">
             <h3>All the ways you know to kill...</h3>  
-            <ul>
+            <ul id="abilitiesList">
                 {
                     abilitiesArray.map(ability => {
                         return (
@@ -45,7 +45,7 @@ const Abilities = ({levels, stats, characterClass, race, displayState, classFeat
                 })
                 }
             </ul>
-            <button onClick={displayState}>Get abilities</button>
+            {/* <button onClick={displayState}>Get abilities</button> */}
         </div>
     )
 }

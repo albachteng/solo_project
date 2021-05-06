@@ -24,9 +24,9 @@ const Proficiencies = ({characterClass, chooseFrom, race}) => {
         setProficienciesArray([...proficiencyChoices, ...classProficiencies, ...racialProficiencies]);
     }, [characterClass, race]);
 
-    useEffect(() => {
-        console.log(proficienciesArray);
-    }, [proficienciesArray]);
+    // useEffect(() => {
+    //     console.log(proficienciesArray);
+    // }, [proficienciesArray]);
 
     return(
         <div id='proficiencies'>

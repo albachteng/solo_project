@@ -136,3 +136,18 @@ button {
     width: 20rem;
     margin: 0 auto;
 }
+
+ul {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    max-height: 15rem;
+    li {
+        margin: .25rem 2rem;
+    }
+}
+
+#abilitiesList {
+    display: block;
+}

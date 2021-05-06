@@ -26,9 +26,9 @@ const Skills = ({characterClass, stats}) => {
 
     const [skills, setSkills] = useState(initialSkills);
 
-    useEffect(() => {
+    // useEffect(() => {
         
-    }, [characterClass])
+    // }, [characterClass])
 
     return(
         <div id="skills">

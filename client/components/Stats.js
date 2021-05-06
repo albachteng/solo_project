@@ -7,14 +7,14 @@ const negative = (stat) => mod(stat) >= 0;
 
 const Stats = ({stats, characterClass, race, generateStats, updateStat}) => {
 
-  useEffect(() => {
-    if (race.ability_bonuses) {
-      race.ability_bonuses.forEach(bonusObject => {
-        console.log('adding ', bonusObject.bonus, ' to ', bonusObject.ability_score.name);
-        updateStat(bonusObject.ability_score.name, bonusObject.bonus);
-      });
-    };
-  }, [race]);
+  // useEffect(() => {
+  //   if (race.ability_bonuses) {
+  //     race.ability_bonuses.forEach(bonusObject => {
+  //       console.log('adding ', bonusObject.bonus, ' to ', bonusObject.ability_score.name);
+  //       updateStat(bonusObject.ability_score.name, bonusObject.bonus);
+  //     });
+  //   };
+  // }, [race]);
 
 
   return(

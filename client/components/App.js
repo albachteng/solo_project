@@ -20,11 +20,7 @@ presentation components
 
 const classesArray = ['barbarian', 'bard', 'cleric', 'druid', 'fighter', 'monk', 'paladin', 'ranger', 'ranger', 'sorcerer', 'warlock', 'wizard',];
 const racesArray = ['dragonborn', 'dwarf', 'elf', 'gnome', 'half-elf', 'half-orc', 'halfling', 'human', 'tiefling',];
-const randomClass = () => {
-    const newClass = classesArray[Math.floor(Math.random() * classesArray.length)];
-    console.log(newClass);
-    return newClass;
-};
+const randomClass = () => classesArray[Math.floor(Math.random() * classesArray.length)];
 const randomRace = () => racesArray[Math.floor(Math.random() * racesArray.length)];
 
 
@@ -163,11 +159,13 @@ class App extends Component {
     // makes a fetch request to the dnd5e api
     componentDidMount() {
         const baseUrl = 'https://www.dnd5eapi.co/api/';
+        // fetch characterClass data based on current characterClass index and update state accordingly
         fetch(baseUrl + 'classes/' + this.state.characterClass.index)
             .then(response => response.json())
             .then(data => this.setState((state, props) => {
                 return {...state, characterClass: data};
             }))
+        // fetch levels data based on current characterClass.index and currentLevel, updating state accordingly
         fetch(baseUrl + 'classes/' + this.state.characterClass.index + '/levels/' + this.state.currentLevel)
             .then(response => response.json())
             .then(data => {
@@ -184,7 +182,8 @@ class App extends Component {
                 return {...state, levels: data}
                 })
             });
-        fetch(baseUrl + 'races/' + randomRace())
+        // fetch race data based on current race.index and update state accordingly
+        fetch(baseUrl + 'races/' + this.state.race.index)
             .then(response => response.json())
             .then(data => {
                 this.setState((state, props) => {
