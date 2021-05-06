@@ -15,6 +15,7 @@ const Schema = mongoose.Schema;
 const characterSchema = new Schema({
     name: String,
     stats: Object,
+    race: Object,
     currentLevel: Number,
     characterClass: Object,
     levels: Object,

@@ -3,6 +3,7 @@ import Stats from './Stats';
 import Abilities from './Abilities';
 import Proficiencies from './Proficiencies';
 import Equipment from './Equipment';
+import Finder from './Finder';
 import '../scss/main.scss';
 
 /* 
@@ -53,6 +54,7 @@ class App extends Component {
         this.generateStats = this.generateStats.bind(this);
         this.displayState = this.displayState.bind(this); 
         this.chooseFrom = this.chooseFrom.bind(this);  
+        this.loadSavedCharacter = this.loadSavedCharacter.bind(this);
     }
 
     // returns a random whole number from 1 to dice
@@ -67,6 +69,13 @@ class App extends Component {
         }
         // if a modifier is provided, it is added at the end before returning
         return result += modifier;
+    }
+
+    loadSavedCharacter(stateObject) {
+        console.log(stateObject);
+        // this.setState((state, props) => {
+        //     return {...state, stateObject};
+        // });
     }
 
     generateStats() {
@@ -176,8 +185,9 @@ class App extends Component {
                         characterClass={this.state.characterClass}
                         chooseFrom={this.chooseFrom}
                         />
+                        <Finder loadSavedCharacter={this.loadSavedCharacter}
+                        />
                     </div>
-                    
                 </div>
             </div>
             )
