@@ -26,6 +26,7 @@
   "author": "Graham Albachten",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "mongodb": "^3.6.6",
     "mongoose": "^5.12.7",
     "prop-types": "^15.6.1",

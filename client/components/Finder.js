@@ -26,15 +26,15 @@ const Finder = ({loadSavedCharacter}) => {
             },
             body: JSON.stringify({name}),
         })
-        .then(response => response.json());
-        return 'some asshole';
+        .then(response => response.json())
+        .then(data => loadSavedCharacter(data));
     }
 
     return(
         <div>
-            <h2>Summon one from the depths...</h2>
+            <h3>Summon one from the depths...</h3>
             <input type="text" onChange={update} value={name}></input>
-            <button onClick={() => loadSavedCharacter(getCharacter(name))}>heyo</button>
+            <button onClick={() => getCharacter(name)}>heyo</button>
         </div>
     )
 }
