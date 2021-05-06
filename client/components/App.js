@@ -4,6 +4,7 @@ import Abilities from './Abilities';
 import Proficiencies from './Proficiencies';
 import Equipment from './Equipment';
 import Finder from './Finder';
+import SaveButton from './SaveButton';
 import '../scss/main.scss';
 
 /* 
@@ -55,6 +56,7 @@ class App extends Component {
         this.displayState = this.displayState.bind(this); 
         this.chooseFrom = this.chooseFrom.bind(this);  
         this.loadSavedCharacter = this.loadSavedCharacter.bind(this);
+        this.saveCharacter = this.saveCharacter.bind(this);
     }
 
     // returns a random whole number from 1 to dice
@@ -73,9 +75,21 @@ class App extends Component {
 
     loadSavedCharacter(stateObject) {
         console.log(stateObject);
-        // this.setState((state, props) => {
-        //     return {...state, stateObject};
-        // });
+        this.setState((state, props) => {
+            return {...stateObject};
+        });
+    }
+
+    saveCharacter(name) {
+        fetch('http://localhost:3000/api', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({...this.state, name}),
+        })
+        .then(response => response.json)
+        .then(data => console.log(data));
     }
 
     generateStats() {
@@ -169,23 +183,27 @@ class App extends Component {
                     />
                     <div id="blocks">
                         <Abilities 
-                        classFeatureChoices={this.state.classFeatureChoices}
-                        levels={this.state.levels}
-                        displayState={this.displayState}
-                        chooseFrom={this.chooseFrom}
-                        race={this.state.race}
-                        stats={this.state.stats}
-                        characterClass={this.state.characterClass}
+                            classFeatureChoices={this.state.classFeatureChoices}
+                            levels={this.state.levels}
+                            displayState={this.displayState}
+                            chooseFrom={this.chooseFrom}
+                            race={this.state.race}
+                            stats={this.state.stats}
+                            characterClass={this.state.characterClass}
                         />
                         <Proficiencies
-                        characterClass={this.state.characterClass}
-                        chooseFrom={this.chooseFrom}
+                            characterClass={this.state.characterClass}
+                            chooseFrom={this.chooseFrom}
                         />
                         <Equipment 
-                        characterClass={this.state.characterClass}
-                        chooseFrom={this.chooseFrom}
+                            characterClass={this.state.characterClass}
+                            chooseFrom={this.chooseFrom}
                         />
-                        <Finder loadSavedCharacter={this.loadSavedCharacter}
+                        <Finder 
+                            loadSavedCharacter={this.loadSavedCharacter}
+                        />
+                        <SaveButton 
+                            saveCharacter={this.saveCharacter}
                         />
                     </div>
                 </div>

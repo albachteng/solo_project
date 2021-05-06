@@ -3,6 +3,7 @@ const path = require('path');
 // const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin'); // ditto
 
 module.exports = {
+    target: 'node', 
     entry: './client/index.js',
     output: {
         path: path.resolve(__dirname, 'build'), 
@@ -13,6 +14,7 @@ module.exports = {
         rules: [
             {
             test: /\.jsx?/,
+            exclude: /node_modules/,
             use: {
                 loader: 'babel-loader', 
                 options: {
@@ -25,6 +27,7 @@ module.exports = {
             },
             {
             test: /\.s[ac]ss$/i,
+            exclude: /node_modules/,
             use: ['style-loader', 'css-loader', 'sass-loader',]
             },
         ]  

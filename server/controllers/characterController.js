@@ -21,8 +21,9 @@ characterController.createCharacter = (req, res, next) => {
 characterController.getCharacter = (req, res, next) => {
     console.log('entered controller');
     // find character by its name, will need to add that to state and model
-    Character.findOne({name: req.body.name})
+    Character.findOne({name: req.params.name})
         .then(queryResponse => {
+            console.log('query response:', queryResponse);
             res.locals.character = queryResponse;
             return next();
         })

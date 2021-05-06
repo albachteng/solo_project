@@ -2,7 +2,7 @@ const express = require('express');
 const characterController = require('../controllers/characterController');
 const router = express.Router(); 
 
-router.get('/', 
+router.get('/:name', 
   characterController.getCharacter, 
   (req, res) => {
     res.status(200).json(res.locals.character);

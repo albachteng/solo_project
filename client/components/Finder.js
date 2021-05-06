@@ -19,22 +19,16 @@ const Finder = ({loadSavedCharacter}) => {
     }
     
     const getCharacter = (name) => {
-        fetch('http://localhost:3000/api', {
-            method: 'POST', 
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({name}),
-        })
-        .then(response => response.json())
-        .then(data => loadSavedCharacter(data));
+        fetch(`http://localhost:3000/api/${name}`)
+            .then(response => response.json())
+            .then(data => loadSavedCharacter(data));
     }
 
     return(
         <div>
             <h3>Summon one from the depths...</h3>
             <input type="text" onChange={update} value={name}></input>
-            <button onClick={() => getCharacter(name)}>heyo</button>
+            <button onClick={() => getCharacter(name)}>Begin chanting...</button>
         </div>
     )
 }
