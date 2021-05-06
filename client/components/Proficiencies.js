@@ -21,7 +21,7 @@ const Proficiencies = ({characterClass, chooseFrom}) => {
 
     return(
         <div id='proficiencies'>
-            <h2>Proficiencies</h2>
+            <h3>You've spent a lifetime developing a very specific set of skills...</h3>
             <ul>
                 {proficienciesArray.map(proficiency => <li>{proficiency.name}</li>)}
             </ul>

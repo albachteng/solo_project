@@ -13,6 +13,13 @@ and functionality as props to Stats, Proficiencies and Abilities
 presentation components
 
 */ 
+
+const classesArray = ['barbarian', 'bard', 'cleric', 'druid', 'fighter', 'monk', 'paladin', 'ranger', 'ranger', 'sorcerer', 'warlock', 'wizard',];
+const racesArray = ['dragonborn', 'dwarf', 'elf', 'gnome', 'half-elf', 'half-orc', 'halfling', 'human', 'tiefling',];
+const randomClass = () => classesArray[Math.floor(Math.random() * classesArray.length)];
+const randomRace = () => racesArray[Math.floor(Math.random() * racesArray.length)];
+
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -27,12 +34,15 @@ class App extends Component {
                 hp: 0,
                 ac: 0, 
             },
+            race: {
+                index: randomRace(),
+                },
             currentLevel: 1,
             characterClass: {
                 starting_equipment: [],
                 starting_equipment_options: [],
                 hit_die: 8,
-                index: ['barbarian', 'bard', 'cleric', 'druid', 'fighter', 'monk', 'paladin', 'ranger', 'ranger', 'sorcerer', 'warlock', 'wizard',][Math.floor(Math.random() * 12)],
+                index: randomClass(),
                 proficiency_choices: [
                     {choose: 0}
                 ],},
@@ -69,28 +79,13 @@ class App extends Component {
         newStats.intelligence = this.rollDice(6, 3);
         newStats.wisdom = this.rollDice(6, 3);
         newStats.charisma = this.rollDice(6, 3);
-        newStats.HP = this.state.characterClass.hit_die + Math.floor((newStats.constitution - 10) / 2);
         newStats.AC = 10 + Math.floor((newStats.dexterity - 10) / 2); 
+        newStats.HP = this.state.characterClass.hit_die + Math.floor((newStats.constitution - 10) / 2)
+        
         this.setState((state, props) => {
             return {...state, 
-                characterClass: {
-                    ...state.characterClass,
-                },
-                classFeatureChoices: {
-                    ...state.classFeatureChoices,
-                },
-                stats: newStats}
-        });
-    }
-
-    chooseNewClass() {
-        const newClass = {
-            index: ['barbarian', 'bard', 'cleric', 'druid', 'fighter', 'monk', 'paladin', 'ranger', 'ranger', 'sorcerer', 'warlock', 'wizard',][Math.floor(Math.random() * 12)],
-            proficiency_choices: [
-                {choose: 0}
-            ],};
-        this.setState((state, props) => {
-            return {...state, characterClass: newClass};
+                stats: newStats
+            }
         });
     }
 
@@ -104,7 +99,7 @@ class App extends Component {
         const output = [];
         while (num) {
             // generate a random index
-            const index = Math.ceil(Math.random() * array.length - 1);
+            const index = Math.floor(Math.random() * array.length);
             // if we don't already have that item in the output array
             if (!output.includes(array[index])) {
                 output.push(array[index]);
@@ -112,6 +107,10 @@ class App extends Component {
             } else continue;
         }
         return output;
+    }
+
+    regenerate() {
+        
     }
 
     // makes a fetch request to the dnd5e api
@@ -137,33 +136,48 @@ class App extends Component {
                 this.setState((state, props) => {
                 return {...state, levels: data}
                 })
-            })
+            });
+        fetch(baseUrl + 'races/' + randomRace())
+            .then(response => response.json())
+            .then(data => {
+                this.setState((state, props) => {
+                    return {...state, race: data}
+                })
+            });
         this.generateStats();
     }
 
     render() {
         return(
             <div id="app">
+                <h2>Play a fucking {this.state.race.name} {this.state.characterClass.name}, coward!</h2>
                 <div>
                     <Stats 
                       generateStats={this.generateStats} 
+                      race={this.state.race}
                       stats={this.state.stats}
                       characterClass={this.state.characterClass}
                     />
-                    <Abilities 
-                      classFeatureChoices={this.state.classFeatureChoices}
-                      levels={this.state.levels}
-                      displayState={this.displayState}
-                      chooseFrom={this.chooseFrom}
-                    />
-                    <Proficiencies
-                      characterClass={this.state.characterClass}
-                      chooseFrom={this.chooseFrom}
-                    />
-                    <Equipment 
-                      characterClass={this.state.characterClass}
-                      chooseFrom={this.chooseFrom}
-                    />
+                    <div id="blocks">
+                        <Abilities 
+                        classFeatureChoices={this.state.classFeatureChoices}
+                        levels={this.state.levels}
+                        displayState={this.displayState}
+                        chooseFrom={this.chooseFrom}
+                        race={this.state.race}
+                        stats={this.state.stats}
+                        characterClass={this.state.characterClass}
+                        />
+                        <Proficiencies
+                        characterClass={this.state.characterClass}
+                        chooseFrom={this.chooseFrom}
+                        />
+                        <Equipment 
+                        characterClass={this.state.characterClass}
+                        chooseFrom={this.chooseFrom}
+                        />
+                    </div>
+                    
                 </div>
             </div>
             )

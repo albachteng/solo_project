@@ -1,15 +1,108 @@
 :root {
     font-size: 16px;
-    margin: 0; 
     font-family: 'Open Sans', helvetica, sans-serif;
 }
 
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background: #222;
+    color: #ddd;
+}
+
+#app {
+    margin: 0 auto;
+    max-width: 95vw;
+}
+
+h1 {
+    font-family: Druk;
+    margin: 2rem 4rem;
+    font-size: 3rem;
+    text-align: center;
+}
+
+#fight { 
+    color: black;
+    font-family: 'Druk Wide';
+    -webkit-text-stroke: 1px white;
+    text-shadow: 0px 7px 3px rgba(140, 75, 75, 0.25),
+                 5px 10px 3px rgba(197, 52, 52, 0.5),
+                 -5px 10px 3px rgba(255, 0, 0, 0.75);
+}
+
+h2 {
+    margin: 1rem 2rem;
+    padding: .5rem;
+    font-size: 1.75rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: black;
+    font-family: Druk;
+    background: rgba(255, 255, 0, 0.75);
+}
+
+h3 {
+    margin: .75rem 0;
+    padding: .5rem;
+    text-align: center;
+    width: 100%;
+    font-size: 1.25rem;
+    color: black;
+    font-family: Druk;
+    background: rgba(255, 255, 0, 0.75);
+}
+
 #stats {
-    margin: .5rem 1rem;
-    width: 100px;
+    margin: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;    
     > * {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
+        flex-basis: 1fr;
+        justify-content: center;
+        padding: .25rem;
+        margin: .25rem;
+    }
+    h4 {
+        font-size: 2rem;
+        font-weight: bolder;
+    }
+    p {
+        margin-top: .25rem;
+        margin-left: 1rem;
+        text-align: center;
+    }
+    button {
+        height: 2.5rem;
+        align-self: center;
+        padding: .25rem .5rem;
+        text-align: center;
+        line-height: 1.75rem;
+    }
+}
+
+#blocks {
+    max-height: 40vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: .25rem;
+    > * {
+        margin: .5rem;
+        padding: 2rem;
+    }
+    #abilities {
+        grid-row: 1 / 4;
+    }
+}
+
+#ability {
+    h4 {
+        text-align: center;
+        margin: .5rem .75rem;
+    }
+    p {
+        padding: .5rem;
     }
 }

@@ -9,21 +9,26 @@ for (fighter) abilities
 
 */ 
 
-const Abilities = ({levels, displayState, classFeatureChoices, chooseFrom}) => {
+const Abilities = ({levels, stats, characterClass, race, displayState, classFeatureChoices, chooseFrom}) => {
 
     const [abilitiesArray, setAbilitiesArray] = useState([]);
 
     useEffect(() => {
         const classFeatures = levels.features || [];
+        const racialFeatures = race.traits || [];
         const classFeatureSelections = chooseFrom(
             classFeatureChoices.choice.choose, // a number
             classFeatureChoices.choice.from) // an array
-        setAbilitiesArray([...classFeatures, ...classFeatureSelections  || []]);
-    }, [levels, classFeatureChoices]);
+        setAbilitiesArray([...classFeatures, ...racialFeatures || [], ...classFeatureSelections  || []]);
+    }, [levels, classFeatureChoices, characterClass, race, stats]);
+
+    useEffect(() => {
+        console.log(abilitiesArray);
+    }, abilitiesArray);
 
     return( 
         <div id="abilities">
-            <h2>Abilities</h2>  
+            <h3>All the ways you know to kill...</h3>  
             <ul>{abilitiesArray.map(ability => <Ability name={ability.name} url={ability.url}/>)}</ul>
             <button onClick={displayState}>Get abilities</button>
         </div>

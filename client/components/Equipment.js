@@ -27,6 +27,7 @@ const Equipment = ({characterClass, chooseFrom}) => {
 
     return(
         <div id="equipment">
+            <h3>Tools of the trade... (your trade is killing)</h3>
             <ul>
                 {equipmentArray.map(item => {
                     if (item.equipment) {

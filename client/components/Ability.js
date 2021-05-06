@@ -21,8 +21,8 @@ useEffect(() => {
 }, []);
 
     return(
-        <div>
-            <h3>{props.name}</h3>
+        <div id="ability">
+            <h4>{props.name}</h4>
             <p>{description}</p>
         </div>
     )
