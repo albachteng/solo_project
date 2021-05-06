@@ -6,7 +6,7 @@ functional component displays proficiencies from passed state
 
 */ 
 
-const Proficiencies = ({characterClass, chooseFrom}) => {
+const Proficiencies = ({characterClass, chooseFrom, race}) => {
 
     const [proficienciesArray, setProficienciesArray] = useState([]);
 
@@ -15,9 +15,18 @@ const Proficiencies = ({characterClass, chooseFrom}) => {
             characterClass.proficiency_choices[0].choose, 
             characterClass.proficiency_choices[0].from);
         const classProficiencies = characterClass.proficiencies || [];
-        // TODO const racialProficiencies = ...; add to proficiencies below...
-        setProficienciesArray([...proficiencyChoices, ...classProficiencies]);
-    }, [characterClass]);
+        const racialProficiencies = race.starting_proficiencies || [];
+        if (race.starting_proficiency_options) {
+            racialProficiencies.concat(chooseFrom(
+                race.starting_proficiency_options.choose,
+                race.starting_proficiency_options.from))
+        }
+        setProficienciesArray([...proficiencyChoices, ...classProficiencies, ...racialProficiencies]);
+    }, [characterClass, race]);
+
+    useEffect(() => {
+        console.log(proficienciesArray);
+    }, [proficienciesArray]);
 
     return(
         <div id='proficiencies'>

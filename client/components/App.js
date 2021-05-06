@@ -196,6 +196,7 @@ class App extends Component {
                             race={this.state.race}
                         />
                         <Proficiencies
+                            race={this.state.race}
                             characterClass={this.state.characterClass}
                             chooseFrom={this.chooseFrom}
                         />
