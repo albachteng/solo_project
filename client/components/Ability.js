@@ -7,22 +7,22 @@ result of an API call for the descriptions
 
 */ 
 
-const Ability = (props) => {
+const Ability = ({name, url, race, levels, characterClass}) => {
 
 const [description, setDescription] = useState('');
 
 useEffect(() => {
-    fetch('https://www.dnd5eapi.co' + props.url)
+    fetch('https://www.dnd5eapi.co' + url)
         .then(response => response.json())
         .then(data => {
             console.log(data);
             setDescription(data.desc[0]);
         });
-}, []);
+}, [characterClass, race]);
 
     return(
-        <div id="ability">
-            <h4>{props.name}</h4>
+        <div className="ability">
+            <h4>{name}</h4>
             <p>{description}</p>
         </div>
     )

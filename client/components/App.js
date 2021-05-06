@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Stats from './Stats';
 import Race from './Race';
+import Skills from './Skills';
 import Abilities from './Abilities';
 import Proficiencies from './Proficiencies';
 import Equipment from './Equipment';
@@ -28,14 +29,14 @@ class App extends Component {
         super(props);
         this.state = {
             stats: {
-                strength: 0,
-                dexterity: 0,
-                constitution: 0,
-                intelligence: 0,
-                wisdom: 0,
+                STR: 0,
+                DEX: 0,
+                CON: 0,
+                INT: 0,
+                WIS: 0,
                 charisma: 0,
-                hp: 0,
-                ac: 0, 
+                HP: 0,
+                AC: 0, 
             },
             race: {
                 index: randomRace(),
@@ -58,6 +59,7 @@ class App extends Component {
         this.chooseFrom = this.chooseFrom.bind(this);  
         this.loadSavedCharacter = this.loadSavedCharacter.bind(this);
         this.saveCharacter = this.saveCharacter.bind(this);
+        this.updateStat = this.updateStat.bind(this);
     }
 
     // returns a random whole number from 1 to dice
@@ -92,20 +94,25 @@ class App extends Component {
         .then(response => response.json)
         .then(data => console.log(data));
     }
-
+    updateStat(stat, bonus) {
+        const newStats = {...this.state.stats};
+        newStats[stat] += bonus;
+        this.setState((state, props) => {
+            return {...state, stats: newStats};
+        });
+    }
     generateStats() {
         // roll between 3 and 18 for all stats
         const newStats = {};
         // TODO: add logic for dropping the lowest of four rolls
-        newStats.strength = this.rollDice(6, 3);
-        newStats.dexterity = this.rollDice(6, 3);
-        newStats.constitution = this.rollDice(6, 3);
-        newStats.intelligence = this.rollDice(6, 3);
-        newStats.wisdom = this.rollDice(6, 3);
-        newStats.charisma = this.rollDice(6, 3);
-        newStats.AC = 10 + Math.floor((newStats.dexterity - 10) / 2); 
-        newStats.HP = this.state.characterClass.hit_die + Math.floor((newStats.constitution - 10) / 2)
-        
+        newStats.STR = this.rollDice(6, 3);
+        newStats.DEX = this.rollDice(6, 3);
+        newStats.CON = this.rollDice(6, 3);
+        newStats.INT = this.rollDice(6, 3);
+        newStats.WIS = this.rollDice(6, 3);
+        newStats.CHA = this.rollDice(6, 3);
+        newStats.AC = 10 + Math.floor((newStats.DEX - 10) / 2); 
+        newStats.HP = this.state.characterClass.hit_die + Math.floor((newStats.CON - 10) / 2);
         this.setState((state, props) => {
             return {...state, 
                 stats: newStats
@@ -134,7 +141,9 @@ class App extends Component {
     }
 
     regenerate() {
-        
+        this.setState((state, props) => {
+            return {}
+        })
     }
 
     // makes a fetch request to the dnd5e api
@@ -181,6 +190,7 @@ class App extends Component {
                       race={this.state.race}
                       stats={this.state.stats}
                       characterClass={this.state.characterClass}
+                      updateStat={this.updateStat}
                     />
                     <div id="blocks">
                         <Abilities 
@@ -194,6 +204,9 @@ class App extends Component {
                         />
                         <Race
                             race={this.state.race}
+                        />
+                        <Skills
+                            characterClass={this.state.characterClass}
                         />
                         <Proficiencies
                             race={this.state.race}

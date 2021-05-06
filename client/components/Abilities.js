@@ -20,16 +20,31 @@ const Abilities = ({levels, stats, characterClass, race, displayState, classFeat
             classFeatureChoices.choice.choose, // a number
             classFeatureChoices.choice.from) // an array
         setAbilitiesArray([...classFeatures, ...racialFeatures || [], ...classFeatureSelections  || []]);
-    }, [levels, classFeatureChoices, characterClass, race, stats]);
+    }, [characterClass, race, stats]);
 
     useEffect(() => {
         console.log(abilitiesArray);
-    }, abilitiesArray);
+    }, [abilitiesArray]);
 
     return( 
         <div id="abilities">
             <h3>All the ways you know to kill...</h3>  
-            <ul>{abilitiesArray.map(ability => <Ability name={ability.name} url={ability.url}/>)}</ul>
+            <ul>
+                {
+                    abilitiesArray.map(ability => {
+                        return (
+                            <Ability 
+                            characterClass={characterClass} 
+                            levels={levels}
+                            race={race} 
+                            name={ability.name} 
+                            url={ability.url}
+                        />
+                        )
+                        
+                })
+                }
+            </ul>
             <button onClick={displayState}>Get abilities</button>
         </div>
     )

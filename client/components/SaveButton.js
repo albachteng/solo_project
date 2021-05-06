@@ -16,8 +16,9 @@ const update = (e) => {
 
     return(
         <div>
+            <h3>Save this one...</h3>
             <input onChange={update} type="text" value={name}></input>
-            <button onClick={() => saveCharacter(name)}>Save this one...</button>
+            <button onClick={() => saveCharacter(name)}>Send forth its spirit</button>
         </div>
     )
 }
