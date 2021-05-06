@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Stats from './Stats';
+import Race from './Race';
 import Abilities from './Abilities';
 import Proficiencies from './Proficiencies';
 import Equipment from './Equipment';
@@ -190,6 +191,9 @@ class App extends Component {
                             race={this.state.race}
                             stats={this.state.stats}
                             characterClass={this.state.characterClass}
+                        />
+                        <Race
+                            race={this.state.race}
                         />
                         <Proficiencies
                             characterClass={this.state.characterClass}
