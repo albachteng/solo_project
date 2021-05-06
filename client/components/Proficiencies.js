@@ -30,7 +30,7 @@ const Proficiencies = ({characterClass, chooseFrom, race}) => {
 
     return(
         <div id='proficiencies'>
-            <h3>You've spent a lifetime developing a very specific set of skills...</h3>
+            <h3>Your proficiencies give you an edge in the fight...</h3>
             <ul>
                 {proficienciesArray.map(proficiency => <li>{proficiency.name}</li>)}
             </ul>

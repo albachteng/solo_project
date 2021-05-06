@@ -20,7 +20,11 @@ presentation components
 
 const classesArray = ['barbarian', 'bard', 'cleric', 'druid', 'fighter', 'monk', 'paladin', 'ranger', 'ranger', 'sorcerer', 'warlock', 'wizard',];
 const racesArray = ['dragonborn', 'dwarf', 'elf', 'gnome', 'half-elf', 'half-orc', 'halfling', 'human', 'tiefling',];
-const randomClass = () => classesArray[Math.floor(Math.random() * classesArray.length)];
+const randomClass = () => {
+    const newClass = classesArray[Math.floor(Math.random() * classesArray.length)];
+    console.log(newClass);
+    return newClass;
+};
 const randomRace = () => racesArray[Math.floor(Math.random() * racesArray.length)];
 
 
@@ -60,6 +64,7 @@ class App extends Component {
         this.loadSavedCharacter = this.loadSavedCharacter.bind(this);
         this.saveCharacter = this.saveCharacter.bind(this);
         this.updateStat = this.updateStat.bind(this);
+        this.regenerate = this.regenerate.bind(this);
     }
 
     // returns a random whole number from 1 to dice
@@ -142,8 +147,17 @@ class App extends Component {
 
     regenerate() {
         this.setState((state, props) => {
-            return {}
-        })
+            return {...state, 
+                race: {
+                    ...state.race,
+                    index: randomRace(),
+                }, 
+                characterClass: {
+                    ...state.characterClass,
+                    index: randomClass(),
+                },
+            }
+        }, () => this.componentDidMount());
     }
 
     // makes a fetch request to the dnd5e api
@@ -184,6 +198,9 @@ class App extends Component {
         return(
             <div id="app">
                 <h2>Play a fucking {this.state.race.name} {this.state.characterClass.name}, coward!</h2>
+                <div id="reroll">
+                    <button className="reroll" onClick={this.regenerate}>This one is weak, bring me another...</button>
+                    </div>
                 <div>
                     <Stats 
                       generateStats={this.generateStats} 
@@ -206,6 +223,7 @@ class App extends Component {
                             race={this.state.race}
                         />
                         <Skills
+                            stats={this.state.stats}
                             characterClass={this.state.characterClass}
                         />
                         <Proficiencies

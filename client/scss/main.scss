@@ -124,4 +124,15 @@ button {
     padding: .25rem .5rem;
     margin-left: 1rem;
     font-size: 1rem;
+    background: #333;
+    color: #ddd;
+    .reroll {
+        margin: 0 auto;
+        display: block;
+    }
+}
+
+#reroll {
+    width: 20rem;
+    margin: 0 auto;
 }

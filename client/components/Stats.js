@@ -46,12 +46,12 @@ const Stats = ({stats, characterClass, race, generateStats, updateStat}) => {
 
       <div>
         <h4><strong>WIS: </strong><br></br>{stats.WIS}</h4>
-        <p>{ Math.floor((stats.INT - 10) / 2) }</p>
+        <p>{ Math.floor((stats.WIS - 10) / 2) }</p>
       </div>
       
       <div>
         <h4><strong>CHA: </strong><br></br>{stats.CHA}</h4>
-        <p>{ Math.floor((stats.INT - 10) / 2) }</p>
+        <p>{ Math.floor((stats.CHA - 10) / 2) }</p>
       </div>
       
       <button onClick={generateStats}>Reroll Stats</button>
