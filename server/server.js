@@ -2,10 +2,10 @@ const express = require('express');
 const app = express();
 const path = require('path'); 
 const apiRouter = require('./routes/api');
-const mongoose = require('mongoose'); 
+// const mongoose = require('mongoose'); 
 const cors = require('cors'); 
-const uri = 'mongodb+srv://admin:correcthorsebattery@cluster0.faeej.mongodb.net/Solo_Project?retryWrites=true&w=majority';
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+// const uri = 'mongodb+srv://admin:correcthorsebattery@cluster0.faeej.mongodb.net/Solo_Project?retryWrites=true&w=majority';
+// mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // handle parsing request body
 app.use(express.json());

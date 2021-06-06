@@ -1,6 +1,8 @@
 const mongoose = require('mongoose'); 
+require('dotenv').config();
 
-const uri = 'mongodb+srv://admin:correcthorsebattery@cluster0.faeej.mongodb.net/Solo_Project?retryWrites=true&w=majority';
+const uri = process.env.MONGO_URI;
+console.log(uri);
 
 mongoose.connect(uri, {
     useNewUrlParser: true,

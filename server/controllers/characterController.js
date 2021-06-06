@@ -19,7 +19,7 @@ characterController.createCharacter = (req, res, next) => {
 
 // getCharacter for displaying saved characters
 characterController.getCharacter = (req, res, next) => {
-    console.log('entered controller');
+    // console.log('entered controller');
     // find character by its name, will need to add that to state and model
     Character.findOne({name: req.params.name})
         .then(queryResponse => {

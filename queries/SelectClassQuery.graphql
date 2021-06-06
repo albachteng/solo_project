@@ -1,0 +1,50 @@
+query SelectClassQuery ($FilterFindOneClassInput: FilterFindOneClassInput){
+  class (filter: $FilterFindOneClassInput) {
+    name
+    hit_die
+    class_levels #url
+    saving_throws {
+      name
+    }
+    spells #url
+    spellcasting {
+      spellcasting_ability {
+        name
+      }
+      info {
+        name
+        desc
+      }
+      level
+    }
+  	starting_equipment {
+      quantity
+      equipment {
+        name
+      }
+    }
+    proficiencies {
+      name
+    }
+    proficiency_choices {
+      choose
+      from {
+        name
+      }
+    }
+    starting_equipment_options {
+      choose
+      from {
+        equipment {
+          name
+        }
+        quantity
+      }
+    }
+    subclasses {
+      name
+    }
+  }
+}
+
+## variable of form: {"FilterFindOneClassInput": {"index": "warlock"} }
